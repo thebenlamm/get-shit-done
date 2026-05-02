@@ -23,6 +23,11 @@
 
 const fs = require('fs');
 const path = require('path');
+// Hoisted from check() body (#2985 CR): the extras module is loaded once at
+// module-init time instead of being required per file scanned. With ~360 test
+// files in the suite this avoids 360 require-cache lookups, and the import
+// failure (if any) surfaces at script start rather than mid-scan.
+const extras = require('./lint-no-source-grep-extras.cjs');
 
 const TESTS_DIR = path.join(__dirname, '..', 'tests');
 const ALLOW_ANNOTATION = /\/\/\s*allow-test-rule:\s*\S/;
@@ -113,7 +118,7 @@ function check(filepath) {
   // Patterns F..G (#2982): var-binding readFileSync().<text-method>() and
   // assert.ok(<expr>.match(...)). These escape the simpler patterns above
   // because the bind and the use are on different lines or wrapped.
-  const extras = require('./lint-no-source-grep-extras.cjs');
+  // (extras hoisted to module top — #2985 CR)
   const varBindFindings = extras.detectVarBindingViolations(content);
   if (varBindFindings.length > 0) {
     const samples = varBindFindings.slice(0, 3)

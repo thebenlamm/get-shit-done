@@ -1,7 +1,8 @@
-// allow-test-rule: pending-migration-to-typed-ir [#2974]
-// Tracked in #2974 for migration to typed-IR assertions per CONTRIBUTING.md
-// "Prohibited: Raw Text Matching on Test Outputs". Per-file review may
-// reclassify some entries as source-text-is-the-product during migration.
+// allow-test-rule: source-text-is-the-product
+// Reads commands/gsd/ultraplan-phase.md and workflows/ultraplan-phase.md —
+// the deployed command and workflow files the runtime loads. The text content
+// IS the runtime contract (#2985 CR: reclassified for consistency with
+// enh-2380-sync-skills.test.cjs and similar runtime-loaded .md test files).
 
 /**
  * /gsd-ultraplan-phase [BETA] Tests

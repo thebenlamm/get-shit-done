@@ -9,7 +9,9 @@ const { test, describe } = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('node:path');
 
-const { detectVarBindingViolations, VIOLATION } = require(path.join(__dirname, '..', 'scripts', 'lint-no-source-grep-extras.cjs'));
+// Single top-level import — reused across all three describe blocks below
+// (#2985 CR: previously this module was require()'d three separate times).
+const { detectVarBindingViolations, detectWrappedAssertOkMatch, VIOLATION } = require(path.join(__dirname, '..', 'scripts', 'lint-no-source-grep-extras.cjs'));
 
 // detectVarBindingViolations is pure: takes source text, returns a list of
 // violation records. Tests assert on the structured records, not on the
@@ -38,8 +40,6 @@ describe('Bug #2982: var-binding readFileSync.includes() detector', () => {
 });
 
 describe('Bug #2982: var-binding detector — coverage of methods (#2982)', () => {
-  const { detectVarBindingViolations, VIOLATION } = require(require('node:path').join(__dirname, '..', 'scripts', 'lint-no-source-grep-extras.cjs'));
-
   for (const method of ['includes', 'startsWith', 'endsWith', 'match', 'search']) {
     test(`flags <var>.${method}( on a readFileSync-bound variable`, () => {
       const src = `const c = fs.readFileSync('x.cjs','utf8');\nc.${method}('foo');\n`;
@@ -79,8 +79,6 @@ describe('Bug #2982: var-binding detector — coverage of methods (#2982)', () =
 });
 
 describe('Bug #2982: assert.ok(...match(...)) detector', () => {
-  const { detectWrappedAssertOkMatch, VIOLATION } = require(require('node:path').join(__dirname, '..', 'scripts', 'lint-no-source-grep-extras.cjs'));
-
   test('flags assert.ok(text.match(/.../)) which escapes assert.match', () => {
     const src = "assert.ok(text.match(/Failures: \\d+/));";
     const findings = detectWrappedAssertOkMatch(src);

@@ -1,7 +1,8 @@
-// allow-test-rule: pending-migration-to-typed-ir [#2974]
-// Tracked in #2974 for migration to typed-IR assertions per CONTRIBUTING.md
-// "Prohibited: Raw Text Matching on Test Outputs". Per-file review may
-// reclassify some entries as source-text-is-the-product during migration.
+// allow-test-rule: source-text-is-the-product
+// Reads workflows/plan-phase.md and workflows/discuss-phase.md — the deployed
+// workflow files the runtime loads. The text content IS the runtime contract
+// (#2985 CR: reclassified for consistency with enh-2380-sync-skills.test.cjs
+// which exercises the same kind of runtime-loaded workflow .md files).
 
 /**
  * GSD Tools Tests - chain flag preservation in plan-phase

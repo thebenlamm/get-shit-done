@@ -1,7 +1,9 @@
-// allow-test-rule: pending-migration-to-typed-ir [#2974]
-// Tracked in #2974 for migration to typed-IR assertions per CONTRIBUTING.md
-// "Prohibited: Raw Text Matching on Test Outputs". Per-file review may
-// reclassify some entries as source-text-is-the-product during migration.
+// allow-test-rule: source-text-is-the-product
+// Most assertions exercise computePathPrefix() directly (typed-IR style).
+// The post-install scan reads emitted files and asserts the absence of
+// $HOME literals — but the emitted text IS the deployed product, so
+// content assertions on it test the runtime contract, not source code.
+// (#2985 CR: reclassified from pending-migration-to-typed-ir for accurate scope.)
 
 /**
  * Regression test for #2831: OpenCode @file references contain literal `$HOME`

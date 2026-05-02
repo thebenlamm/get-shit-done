@@ -1,7 +1,10 @@
-// allow-test-rule: pending-migration-to-typed-ir [#2974]
-// Tracked in #2974 for migration to typed-IR assertions per CONTRIBUTING.md
-// "Prohibited: Raw Text Matching on Test Outputs". Per-file review may
-// reclassify some entries as source-text-is-the-product during migration.
+// allow-test-rule: source-text-is-the-product
+// Reads commands/gsd/execute-phase.md — the deployed command file the
+// runtime loads. The text content IS the runtime contract; testing it
+// tests the contract (#2985 CR: reclassified from
+// pending-migration-to-typed-ir to match thread-session-management.test.cjs
+// and enh-2380-sync-skills.test.cjs, which exercise the same kind of
+// runtime-loaded command/workflow .md files).
 
 /**
  * Execute-phase active flag prompt tests
